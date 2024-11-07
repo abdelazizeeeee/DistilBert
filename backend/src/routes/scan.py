@@ -4,18 +4,14 @@ from ..utils.document_scanner.document_scanner_save_rgb import load_model, scan
 import torch
 import cv2
 import numpy as np
-import uuid
-import os
+from io import BytesIO
+import base64
 
 router = APIRouter()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model_name = "mbv3"  # or "r50" for ResNet-50
 model = load_model(model_name=model_name, device=device)
-
-# Set the directory where images will be saved (make sure this directory exists)
-IMAGE_DIR = "static/processed_images"
-os.makedirs(IMAGE_DIR, exist_ok=True)  # Ensure the directory exists
 
 
 @router.post("/upload-and-process-image")
@@ -36,7 +32,6 @@ async def upload_and_process_image(file: UploadFile = File(...)):
             detail="Could not decode the uploaded image.",
         )
 
-    # Process the image
     processed_image = scan(
         image=image,
         trained_model=model,
@@ -46,13 +41,10 @@ async def upload_and_process_image(file: UploadFile = File(...)):
         c=9
     )
 
-    # Generate a unique filename and save the processed image
-    filename = f"{uuid.uuid4()}.jpg"
-    filepath = os.path.join(IMAGE_DIR, filename)
-    cv2.imwrite(filepath, processed_image)
+    _, image_encoded = cv2.imencode(".jpg", processed_image)
+    image_bytes = image_encoded.tobytes()
 
-    # Construct the URL to the saved image
-    image_url = f"http://localhost:8000/{IMAGE_DIR}/{filename}"
+    image_base64 = base64.b64encode(image_bytes).decode("utf-8")
+    data_uri = f"data:image/jpeg;base64,{image_base64}"
 
-    # Return the URL as JSON
-    return JSONResponse(content={"image_url": image_url})
+    return JSONResponse(content={"data_uri": data_uri})
