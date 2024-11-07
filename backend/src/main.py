@@ -3,20 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config.settings import settings
 from .config.database import startDB
-
+from fastapi.staticfiles import StaticFiles
 # from src.routes import auth, user
 # from .routes import auth, scan
 from .routes import scan
 
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 origins = [
     settings.CLIENT_ORIGIN,
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
