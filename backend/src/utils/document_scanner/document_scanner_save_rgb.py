@@ -152,6 +152,11 @@ def scan(image: np.ndarray, trained_model: DeepLabV3, image_size=384, BUFFER=10,
     corners[:, 0] *= scale_x
     corners[:, 1] *= scale_y
 
+    if len(corners) > 0:  # Check if corners are detected
+        print("Corners detected!")
+    else:
+        print("No corners detected.")
+
     if not (
         np.all(corners.min(axis=0) >= (0, 0))
         and np.all(corners.max(axis=0) <= (imW, imH))
@@ -212,6 +217,7 @@ def scan(image: np.ndarray, trained_model: DeepLabV3, image_size=384, BUFFER=10,
     final = final.astype(np.uint8)
     
     return final
+
 
 def save_image(image: np.ndarray, output_path: str):
     """Save the processed image to the specified path"""
