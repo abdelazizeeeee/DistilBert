@@ -1,4 +1,4 @@
-# Marksheet OCR
+# Document_scanner
 
 
 
@@ -15,14 +15,30 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
+<<<<<<< HEAD
 git remote add origin https://gitlab.com/Softylines-Alternance/marksheet-ocr.git
+=======
+<<<<<<< HEAD
+git remote add origin https://gitlab.com/Softylines-Alternance/document_scanner.git
+=======
+git remote add origin https://gitlab.com/Softylines-Alternance/marksheet-ocr.git
+>>>>>>> 04c2584 (integrate doc scanner model into starter)
+>>>>>>> main
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
+<<<<<<< HEAD
 - [ ] [Set up project integrations](https://gitlab.com/Softylines-Alternance/fastapi-starter/-/settings/integrations)
+=======
+<<<<<<< HEAD
+- [ ] [Set up project integrations](https://gitlab.com/Softylines-Alternance/document_scanner/-/settings/integrations)
+=======
+- [ ] [Set up project integrations](https://gitlab.com/Softylines-Alternance/fastapi-starter/-/settings/integrations)
+>>>>>>> 04c2584 (integrate doc scanner model into starter)
+>>>>>>> main
 
 ## Collaborate with your team
 
