@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile
+from fastapi import APIRouter, HTTPException, status, File, UploadFile
 from fastapi.responses import JSONResponse
 from ..utils.document_scanner.document_scanner_save_rgb import load_model, scan
 import torch
