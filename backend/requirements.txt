@@ -52,3 +52,4 @@ fastapi-mail
 pydantic-settings
 torch
 torchvision
+fpdf2
