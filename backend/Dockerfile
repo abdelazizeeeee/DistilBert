@@ -34,6 +34,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY ./src /app/src
 
-EXPOSE 8000
+EXPOSE 8087 
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8087"]
