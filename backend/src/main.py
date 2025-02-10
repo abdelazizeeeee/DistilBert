@@ -1,22 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from .config.settings import settings
-from .config.database import startDB
 from fastapi.staticfiles import StaticFiles
-# from src.routes import auth, user
-# from .routes import auth, scan
-from .routes import scan
 
-app = FastAPI()
+from src.config.database import startDB
+from src.config.settings import settings
+from src.routes import sentiment
+
+app = FastAPI(title="Sentiment Analysis API", version="1.0.0")
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
-origins = [
-    settings.CLIENT_ORIGIN,
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        settings.CLIENT_ORIGIN] if settings.CLIENT_ORIGIN else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,11 +21,9 @@ app.add_middleware(
 
 
 @app.on_event("startup")
-async def start_dependencies():
+async def startup():
+    """Initialize dependencies on startup."""
     await startDB()
-    # await startMinio()
 
-
-# app.include_router(auth.router, tags=["Auth"], prefix="/api/auth")
-# app.include_router(user.router, tags=["User"], prefix="/api/users")
-app.include_router(scan.router, tags=["DocumentScan"], prefix="/api/scan")
+app.include_router(sentiment.router, tags=[
+                   "Sentiment"], prefix="/api/sentiment")

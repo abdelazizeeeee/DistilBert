@@ -1,13 +1,15 @@
-.PHONY: up down
+.PHONY: up down logs restart
 
-# Name of the Docker Compose file
 COMPOSE_FILE ?= docker-compose.yml
-
-# Name of the Docker Compose project
-COMPOSE_PROJECT_NAME ?= document-scanner
+COMPOSE_PROJECT_NAME ?= sentimentanalysis
 
 up:
 	docker-compose -f $(COMPOSE_FILE) -p $(COMPOSE_PROJECT_NAME) up -d --build
 
 down:
 	docker-compose -f $(COMPOSE_FILE) -p $(COMPOSE_PROJECT_NAME) down
+
+logs:
+	docker-compose -f $(COMPOSE_FILE) -p $(COMPOSE_PROJECT_NAME) logs -f
+
+restart: down up
