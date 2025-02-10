@@ -8,7 +8,6 @@ from src.routes import sentiment
 
 app = FastAPI(title="Sentiment Analysis API", version="1.0.0")
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
